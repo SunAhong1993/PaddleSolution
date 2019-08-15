@@ -3,7 +3,6 @@
 在[官网](https://www.anaconda.com/distribution/)选择“Windows”，并选择与所需python相对应的Anaconda版本进行下载（PaddlePaddle要求安装的Anaconda版本为64-bit）
 
 ### 1.2 安装Anaconda 
-步骤一：安装      
 打开下载的安装包（以.exe为后缀），根据引导完成安装，在安装过程中可以修改安装路径，具体如下图所示：
 <div align=center><img width="580" height="400" src="./anaconda1.png"/></div>                  
 【注意】默认安装在Windows当前用户主目录下           
