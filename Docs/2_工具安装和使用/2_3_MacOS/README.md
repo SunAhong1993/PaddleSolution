@@ -3,12 +3,12 @@
 在[官网](https://www.anaconda.com/distribution/)选择“MacOS”，并选择与所需python相对应的Anaconda版本进行下载
 
 ### 1.2 安装Anaconda 
-步骤一：安装      
+***步骤一：安装***      
 打开下载的安装包（以.pkl为后缀），根据引导完成安装，在安装过程中可以修改安装路径，具体如下图所示：
 <div align=center><img width="600" height="400" src="./anaconda1.png"/></div>          
 【注意】默认安装在MacOS当前用户主目录下       
 
-步骤二：设置环境变量   
+***步骤二：设置环境变量***   
 在命令行中执行下述命令
 
 ```cmd
