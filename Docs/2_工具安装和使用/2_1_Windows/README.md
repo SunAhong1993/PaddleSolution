@@ -5,7 +5,7 @@
 ### 1.2 安装Anaconda 
 步骤一：安装      
 打开下载的安装包（以.exe为后缀），根据引导完成安装，在安装过程中可以修改安装路径，具体如下图所示：
-<div align=center><img width="580" height="400" src="anaconda1.png"/></div>                  
+<div align=center><img width="580" height="400" src="./anaconda1.png"/></div>                  
 【注意】默认安装在Windows当前用户主目录下           
 
 ### 1.3 使用Anaconda  
@@ -68,7 +68,9 @@ pip install labelme
 ### 3.2 使用LabelMe
 在命令行中执行下述命令，则会出现标注工具
 ```cmd
-labelme
+# 进入创建好的Anaconda环境
+source activate mypaddle
+# 开启LabelMe
 ```
 LabelMe标注工具界面主要如下图所示：       
 <div align=center><img width="800" height="450" src="./labelme1.png"/></div>             
