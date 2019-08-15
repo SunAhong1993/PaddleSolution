@@ -11,14 +11,14 @@ wget https://repo.anaconda.com/archive/Anaconda3-2019.07-Linux-x86_64.sh --no-ch
 ```
 ### 1.2 安装Anaconda 
 
-步骤一：安装       
+***步骤一：安装***       
 在Anaconda安装包所在路径执行下述命令行
 ```cmd
 # 运行所下载的Anaconda，例如：
 bash ./Anaconda3-2019.07-Linux-x86_64.sh
 ```
 【注意】安装过程中一直回车即可，直至出现设置路径时刻进行修改，否则默认安装在Ubuntu当前用户主目录下        
-步骤二：设置环境变量     
+***步骤二：设置环境变量***     
 在命令行中执行下述命令
 ```cmd
 # 将anaconda的bin目录加入PATH
