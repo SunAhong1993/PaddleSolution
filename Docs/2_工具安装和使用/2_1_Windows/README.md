@@ -41,6 +41,7 @@ pip install -U paddlepaddle
 pip install -U paddlepaddle-gpu
 # （选择3）安装指定版本PaddlePaddle
 pip install -U paddlepaddle-gpu==[版本号]
+pip install -U paddlepaddle==[版本号]
 ```
 【注意】版本号可参考[这里](https://pypi.org/project/paddlepaddle-gpu/#history)       
 
