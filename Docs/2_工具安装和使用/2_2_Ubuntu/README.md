@@ -64,7 +64,7 @@ pip install -U paddlepaddle-gpu
 pip install -U paddlepaddle-gpu==[版本号]
 pip install -U paddlepaddle==[版本号]
 ```
-【注意】版本号可参考[这里](https://pypi.org/project/paddlepaddle-gpu/#history)       
+【注意】版本号可参考[PaddlePaddle官网](https://pypi.org/project/paddlepaddle-gpu/#history)       
 
 安装成功后，打开python命令行，使用以下代码进行测试：
 ```python
