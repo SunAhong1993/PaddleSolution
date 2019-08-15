@@ -1,6 +1,6 @@
 ## 1. Anaconda的安装与使用    
 
-## 1.1 下载Anaconda         
+### 1.1 下载Anaconda         
 Ubuntu图形界面下：在[官网](https://www.anaconda.com/distribution/)选择“Linux”，并选择与所需python相对应的Anaconda版本进行下载             
 Ubuntu命令行界面下：使用”wget“进行下载
 ```cmd
