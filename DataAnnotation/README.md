@@ -2,7 +2,8 @@
 在DataAnnotation模块下，我们依赖LabeMe标注工具，同时提供了数据处理脚本，帮助用户快速准备训练目标检测和语义分割任务所需的数据。
 
 ### LabelMe
-LabelMe是目前广泛使用的数据标注工具，并且在GitHub上开源给用户使用。GitHub地址：https://github.com/wkentaro/labelme
+LabelMe是目前广泛使用的数据标注工具，并且在GitHub上开源给用户使用。  
+GitHub地址：https://github.com/wkentaro/labelme
 
 #### LabelMe的安装
 Windows: 参考文档[Docs/2_工具安装和使用/2_1_Windows/2_1_3_LabelMe安装.md](../Docs/2_工具安装和使用/2_1_Windows/2_1_3_LabelMe安装.md)  
