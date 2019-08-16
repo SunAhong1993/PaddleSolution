@@ -1,4 +1,4 @@
-## 1. 安装LabelMe
+## 2.1.3.1 安装LabelMe
 在命令行中执行下述命令
 ```cmd
 # 进入创建好的Anaconda环境
@@ -10,7 +10,7 @@ pip install pyqt5
 # 安装LabelMe
 pip install labelme
 ```
-## 2. 使用LabelMe
+## 2.1.3.2 使用LabelMe
 在命令行中执行下述命令，则会出现标注工具
 ```cmd
 # 进入创建好的Anaconda环境
