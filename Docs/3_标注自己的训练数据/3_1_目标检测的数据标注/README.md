@@ -6,4 +6,4 @@
 
 ***步骤二 标注***           
 - 打开矩形框标注工具，具体如下图所示     
-<div align=center><img width="800" height="450" src="../pics/detection1.png"/></div>             
+<div align=center><img width="800" height="450" src="./pics/detection1.png"/></div>             
