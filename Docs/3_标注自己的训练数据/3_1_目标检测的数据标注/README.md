@@ -1,4 +1,4 @@
-## 1. 使用LabelMe标注自己的数据
+## 3.1.1 使用LabelMe标注自己的数据
 
 ***步骤一 准备工作***   
 - 对收集的图像划分为训练、验证（非必须）、测试三个部分的数据集，分别存放于对应的文件夹中      
@@ -16,7 +16,9 @@
 当框标注错误时，可点击右侧的“Edit Polygons”再点击标注框，通过拖拉进行修改，也可再点击“Delete Polygon”进行删除。
 
 - 当所使用的模型是类似Mask R-CNN这类模型时，标注也需要语义分割信息；所以需要在标注过矩形框的基础上，点击右侧的“Create Polygons”以打点的方式圈出目标的轮廓，具体如下提所示：
-
+<div align=center><img width="800" height="450" src="./pics/detection3.gif"/></div>        
 
 - 点击右侧”Save“，将标注结果保存到步骤一中创建的文件夹中
 
+【注意】在定义label名字时，在名字后加上“_0”或“_1”分别代表目标是一个对象（iscrowd=0）还是一组对象（iscrowd=1），例如下图中的水果单堆独分割成一个个水果较不容易，所以将其定义为一组水果对象，label定位“fruit_1”         
+<div align=center><img width="800" height="450" src="./pics/detection4.png"/></div>   
