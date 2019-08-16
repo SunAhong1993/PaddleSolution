@@ -1,4 +1,4 @@
-## 1. 安装PaddlePaddle
+## 2.2.2.1 安装PaddlePaddle
 PaddlePaddle可以在64-bit的Ubuntu14.04（支持CUDA8、CUDA10）、Ubuntu16.04（支持CUDA8、CUDA9、CUDA10）、Ubuntu18.04(支持CUDA10)上运行，同时支持python2（>=2.7.15）和python3（>= 3.5.1），但pip版本必须高于9.0.1。Windows版本同时支持CPU版和GPU版的PaddlePaddle，若使用GPU版，对于CUDA和CUDNN的安装，可参考NVIDIA官方文档[(https://docs.nvidia.com/cuda/cuda-installation-guide-linux/)](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/)和[(https://www.paddlepaddle.org.cn/documentation/docs/zh/1.5/beginners_guide/install/Tables.html/#ciwhls-release)](https://www.paddlepaddle.org.cn/documentation/docs/zh/1.5/beginners_guide/install/Tables.html/#ciwhls-release)了解。
 
 
