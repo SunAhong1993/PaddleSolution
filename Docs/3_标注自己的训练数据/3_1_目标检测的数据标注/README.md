@@ -15,7 +15,7 @@
 
 当框标注错误时，可点击右侧的“Edit Polygons”再点击标注框，通过拖拉进行修改，也可再点击“Delete Polygon”进行删除。
 
-- 当所使用的模型是类似Mask R-CNN这类模型时，虽是目标检测模型，但却需要予以分割信息；所以点击右侧的“Create Polygons”以打点的方式圈出目标的轮廓，具体如下提所示：
+- 当所使用的模型是类似Mask R-CNN这类模型时，虽是目标检测模型，但却需要实例分割信息；所以点击右侧的“Create Polygons”以打点的方式圈出目标的轮廓，具体如下提所示：
 <div align=center><img width="800" height="450" src="./pics/detection3.gif"/></div>        
 
 - 点击右侧”Save“，将标注结果保存到步骤一中创建的文件夹中
@@ -25,4 +25,20 @@
 
 
 ## 3.1.2 对LabelMe标注数据的转换
+在命令行中执行下述命令：
+```cmd
+# 进入Anaconda环境后，安装下述python包
+# 安装numpy
+pip install numpy
+# 安装PIL
+pip install Pillow
+# 转换
+cd ./DataAnnotation
+python ./labelme2coco.py \
+       --image_input_dir ~/Users/image/ \
+       --json_input_dir ~/Users/json/ \
+# --image_input_dir：3.1.1的步骤一中创建的图像文件夹路径
+# --json_input_dir：image_input_dir所对应的存放LabelMe标注文件的文件夹路径
+# 最终转换的json文件存放在image_input_dir父目录下的anatations文件夹下
 
+```
