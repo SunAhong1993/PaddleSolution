@@ -15,7 +15,7 @@
 
 当框标注错误时，可点击右侧的“Edit Polygons”再点击标注框，通过拖拉进行修改，也可再点击“Delete Polygon”进行删除。
 
-- 当所使用的模型是类似Mask R-CNN这类模型时，标注也需要语义分割信息；所以需要在标注过矩形框的基础上，点击右侧的“Create Polygons”以打点的方式圈出目标的轮廓，具体如下提所示：
+- 当所使用的模型是类似Mask R-CNN这类模型时，虽是目标检测模型，但却需要予以分割信息；所以点击右侧的“Create Polygons”以打点的方式圈出目标的轮廓，具体如下提所示：
 <div align=center><img width="800" height="450" src="./pics/detection3.gif"/></div>        
 
 - 点击右侧”Save“，将标注结果保存到步骤一中创建的文件夹中
