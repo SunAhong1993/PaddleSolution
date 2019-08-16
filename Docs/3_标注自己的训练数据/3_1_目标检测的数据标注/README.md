@@ -7,3 +7,5 @@
 ***步骤二 标注***           
 - 打开矩形框标注工具，具体如下图所示     
 <div align=center><img width="800" height="450" src="./pics/detection1.png"/></div>             
+- 使用拖拉的方式对目标物体进行标识，并在弹出的对话框中写明对应label（当label已存在时点击即可），具体如下图所示：
+<div align=center><img width="800" height="450" src="./pics/detection2.gif"/></div>             
