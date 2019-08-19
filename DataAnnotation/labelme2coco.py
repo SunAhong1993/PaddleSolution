@@ -46,13 +46,13 @@ def categories(label, labels_list):
     return category
 
 
-def annotations_rectangle(points, label, num, label_to_num, count):
+def annotations_rectangle(iscrowd, points, label, num, label_to_num, count):
     annotation = {}
     seg_points = np.asarray(points).copy()
     seg_points[1, :] = np.asarray(points)[2, :]
     seg_points[2, :] = np.asarray(points)[1, :]
     annotation['segmentation'] = [list(seg_points.flatten())]
-    annotation['iscrowd'] = 0
+    annotation['iscrowd'] = iscrowd
     annotation['image_id'] = num + 1
     annotation['bbox'] = list(
         map(
@@ -69,11 +69,11 @@ def annotations_rectangle(points, label, num, label_to_num, count):
     return annotation
 
 
-def annotations_polygon(height, width, points, label, num, label_to_num,
-                        count):
+def annotations_polygon(iscrowd, height, width, points, label, num,
+                        label_to_num, count):
     annotation = {}
     annotation['segmentation'] = [list(np.asarray(points).flatten())]
-    annotation['iscrowd'] = 0
+    annotation['iscrowd'] = iscrowd
     annotation['image_id'] = num + 1
     annotation['bbox'] = list(map(float, get_bbox(height, width, points)))
     annotation['area'] = annotation['bbox'][2] * annotation['bbox'][3]
@@ -126,6 +126,8 @@ def deal_json(img_path, json_path):
             for shapes in data['shapes']:
                 count += 1
                 label = shapes['label']
+                iscrowd = int(label.split('_')[-1])
+                label = label[:-2]
                 if label not in labels_list:
                     categories_list.append(categories(label, labels_list))
                     labels_list.append(label)
@@ -134,25 +136,16 @@ def deal_json(img_path, json_path):
                 p_type = shapes['shape_type']
                 if p_type == 'polygon':
                     annotations_list.append(
-                        annotations_polygon(
-                            data['imageHeight'],
-                            data['imageWidth'],
-                            points,
-                            label,
-                            num,
-                            label_to_num,
-                            count, ), )
+                        annotations_polygon(iscrowd, data['imageHeight'], data[
+                            'imageWidth'], points, label, num, label_to_num,
+                                            count))
 
                 if p_type == 'rectangle':
                     points.append([points[0][0], points[1][1]])
                     points.append([points[1][0], points[0][1]])
                     annotations_list.append(
-                        annotations_rectangle(
-                            points,
-                            label,
-                            num,
-                            label_to_num,
-                            count, ), )
+                        annotations_rectangle(iscrowd, points, label, num,
+                                              label_to_num, count))
     data_coco['images'] = images_list
     data_coco['categories'] = categories_list
     data_coco['annotations'] = annotations_list
