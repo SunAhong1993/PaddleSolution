@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
-
 import argparse
 import glob
 import json
 import os
 import os.path as osp
 import sys
-import shutil
 
 import numpy as np
 import PIL.ImageDraw
+
 
 class MyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -22,12 +21,13 @@ class MyEncoder(json.JSONEncoder):
             return obj.tolist()
         else:
             return super(MyEncoder, self).default(obj)
-        
-        
+
+
 def getbbox(self, points):
     polygons = points
     mask = self.polygons_to_mask([self.height, self.width], polygons)
     return self.mask2box(mask)
+
 
 def images(data, num):
     image = {}
@@ -37,32 +37,43 @@ def images(data, num):
     image['file_name'] = data['imagePath'].split('/')[-1]
     return image
 
+
 def categories(label, labels_list):
     category = {}
     category['supercategory'] = 'component'
-    category['id'] = len(labels_list) + 1 
+    category['id'] = len(labels_list) + 1
     category['name'] = label
     return category
 
-def annotations_rectangle(points, label, num, label_to_num, count):
+
+def annotations_rectangle(iscrowd, points, label, num, label_to_num, count):
     annotation = {}
     seg_points = np.asarray(points).copy()
-    seg_points[1,:] = np.asarray(points)[2,:]
-    seg_points[2,:] = np.asarray(points)[1,:]
+    seg_points[1, :] = np.asarray(points)[2, :]
+    seg_points[2, :] = np.asarray(points)[1, :]
     annotation['segmentation'] = [list(seg_points.flatten())]
-    annotation['iscrowd'] = 0
+    annotation['iscrowd'] = iscrowd
     annotation['image_id'] = num + 1
-    annotation['bbox'] = list(map(float, [points[0][0], points[0][1], 
-                                          points[1][0]-points[0][0], points[1][1]-points[0][1]]))
+    annotation['bbox'] = list(
+        map(
+            float,
+            [
+                points[0][0],
+                points[0][1],
+                points[1][0] - points[0][0],
+                points[1][1] - points[0][1],
+            ], ), )
     annotation['area'] = annotation['bbox'][2] * annotation['bbox'][3]
     annotation['category_id'] = label_to_num[label]
     annotation['id'] = count
     return annotation
 
-def annotations_polygon(height, width, points, label, num, label_to_num, count):
+
+def annotations_polygon(iscrowd, height, width, points, label, num,
+                        label_to_num, count):
     annotation = {}
     annotation['segmentation'] = [list(np.asarray(points).flatten())]
-    annotation['iscrowd'] = 0
+    annotation['iscrowd'] = iscrowd
     annotation['image_id'] = num + 1
     annotation['bbox'] = list(map(float, get_bbox(height, width, points)))
     annotation['area'] = annotation['bbox'][2] * annotation['bbox'][3]
@@ -70,22 +81,28 @@ def annotations_polygon(height, width, points, label, num, label_to_num, count):
     annotation['id'] = count
     return annotation
 
+
 def get_bbox(height, width, points):
     polygons = points
-    mask = np.zeros([height,width], dtype=np.uint8)
+    mask = np.zeros([height, width], dtype=np.uint8)
     mask = PIL.Image.fromarray(mask)
     xy = list(map(tuple, polygons))
     PIL.ImageDraw.Draw(mask).polygon(xy=xy, outline=1, fill=1)
     mask = np.array(mask, dtype=bool)
-    index = np.argwhere(mask==1)
+    index = np.argwhere(mask == 1)
     rows = index[:, 0]
     clos = index[:, 1]
     left_top_r = np.min(rows)
     left_top_c = np.min(clos)
     right_bottom_r = np.max(rows)
     right_bottom_c = np.max(clos)
-    return [left_top_c, left_top_r, right_bottom_c - left_top_c,
-            right_bottom_r - left_top_r]  
+    return [
+        left_top_c,
+        left_top_r,
+        right_bottom_c - left_top_c,
+        right_bottom_r - left_top_r,
+    ]
+
 
 def deal_json(img_path, json_path):
     data_coco = {}
@@ -99,7 +116,7 @@ def deal_json(img_path, json_path):
         img_label = img_file.split('.')[0]
         if img_label == '':
             continue
-        label_file = osp.join(json_path, img_label+'.json')
+        label_file = osp.join(json_path, img_label + '.json')
         print('Generating dataset from:', label_file)
         num = num + 1
         with open(label_file) as f:
@@ -109,6 +126,8 @@ def deal_json(img_path, json_path):
             for shapes in data['shapes']:
                 count += 1
                 label = shapes['label']
+                iscrowd = int(label.split('_')[-1])
+                label = label[:-2]
                 if label not in labels_list:
                     categories_list.append(categories(label, labels_list))
                     labels_list.append(label)
@@ -116,22 +135,26 @@ def deal_json(img_path, json_path):
                 points = shapes['points']
                 p_type = shapes['shape_type']
                 if p_type == 'polygon':
-                    annotations_list.append(annotations_polygon(data['imageHeight'], data['imageWidth'],
-                                                                  points, label, num, label_to_num, count)) 
-                    
+                    annotations_list.append(
+                        annotations_polygon(iscrowd, data['imageHeight'], data[
+                            'imageWidth'], points, label, num, label_to_num,
+                                            count))
+
                 if p_type == 'rectangle':
-                    points.append([points[0][0],points[1][1]])
-                    points.append([points[1][0],points[0][1]])
-                    annotations_list.append(annotations_rectangle(points, label, num, label_to_num, count))
+                    points.append([points[0][0], points[1][1]])
+                    points.append([points[1][0], points[0][1]])
+                    annotations_list.append(
+                        annotations_rectangle(iscrowd, points, label, num,
+                                              label_to_num, count))
     data_coco['images'] = images_list
     data_coco['categories'] = categories_list
     data_coco['annotations'] = annotations_list
     return data_coco
 
+
 def main():
     parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter, )
     parser.add_argument('--json_input_dir', help='input annotated directory')
     parser.add_argument('--image_input_dir', help='image directory')
     args = parser.parse_args()
@@ -145,19 +168,27 @@ def main():
     except AssertionError as e:
         print('The image folder does not exist!')
         os._exit(0)
-   
+
     # Allocate the dataset.
     total_num = len(glob.glob(osp.join(args.json_input_dir, '*.json')))
-   
 
     # Deal with the json files.
-    res_dir = os.path.abspath(os.path.join(args.image_input_dir, ".."))
-    if not os.path.exists(res_dir+'/annotations'):
-        os.makedirs(res_dir+'/annotations')
+    res_dir = os.path.abspath(os.path.join(args.image_input_dir, '..'))
+    if not os.path.exists(res_dir + '/annotations'):
+        os.makedirs(res_dir + '/annotations')
     train_data_coco = deal_json(args.image_input_dir, args.json_input_dir)
-    train_json_path = osp.join(res_dir+'/annotations', 'instance_{}.json'.format(os.path.basename(os.path.abspath(args.image_input_dir))))
-    json.dump(train_data_coco, open(train_json_path, 'w'), indent=4, cls=MyEncoder)
-    
-    
+    train_json_path = osp.join(
+        res_dir + '/annotations',
+        'instance_{}.json'.format(
+            os.path.basename(os.path.abspath(args.image_input_dir)), ), )
+    json.dump(
+        train_data_coco,
+        open(
+            train_json_path,
+            'w', ),
+        indent=4,
+        cls=MyEncoder, )
+
+
 if __name__ == '__main__':
     main()
